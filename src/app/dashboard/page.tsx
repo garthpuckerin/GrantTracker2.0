@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { GrantCard } from '@/components/grants/grant-card';
 import { Badge } from '@/components/ui/badge';
-import { ThemePicker } from '@/components/ui/theme-picker';
+// import { ThemePicker } from '@/components/ui/theme-picker';
 import {
   Search,
   Plus,
@@ -175,7 +175,7 @@ export default function DashboardPage() {
               </span>
               <UserRoleIndicator />
 
-              <ThemePicker />
+              {/* <ThemePicker /> */}
 
               <Button
                 variant='ghost'

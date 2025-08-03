@@ -1,47 +1,55 @@
-'use client';
+// 'use client';
 
-import { createContext, useContext, useEffect, useState } from 'react';
-import { Theme, getStoredTheme, applyTheme } from '@/lib/themes';
+// import { createContext, useContext, useEffect, useState } from 'react';
+// import { Theme, getStoredTheme, applyTheme } from '@/lib/themes';
 
-interface ThemeContextType {
-  theme: Theme;
-  setTheme: (theme: Theme) => void;
-}
+// interface ThemeContextType {
+//   theme: Theme;
+//   setTheme: (theme: Theme) => void;
+// }
 
-const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
+// const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
-export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setThemeState] = useState<Theme>('light');
-  const [mounted, setMounted] = useState(false);
+// export function ThemeProvider({ children }: { children: React.ReactNode }) {
+//   const [theme, setThemeState] = useState<Theme>('light');
+//   const [mounted, setMounted] = useState(false);
 
-  useEffect(() => {
-    setMounted(true);
-    const storedTheme = getStoredTheme();
-    setThemeState(storedTheme);
-    applyTheme(storedTheme);
-  }, []);
+//   useEffect(() => {
+//     setMounted(true);
+//     const storedTheme = getStoredTheme();
+//     setThemeState(storedTheme);
+//     // Apply theme immediately
+//     applyTheme(storedTheme);
+//   }, []);
 
-  const setTheme = (newTheme: Theme) => {
-    setThemeState(newTheme);
-    applyTheme(newTheme);
-  };
+//   // Apply theme whenever it changes
+//   useEffect(() => {
+//     if (mounted) {
+//       applyTheme(theme);
+//     }
+//   }, [theme, mounted]);
 
-  // Prevent hydration mismatch
-  if (!mounted) {
-    return <>{children}</>;
-  }
+//   const setTheme = (newTheme: Theme) => {
+//     setThemeState(newTheme);
+//     applyTheme(newTheme);
+//   };
 
-  return (
-    <ThemeContext.Provider value={{ theme, setTheme }}>
-      {children}
-    </ThemeContext.Provider>
-  );
-}
+//   // Always render children, but theme might not be applied until mounted
+//   return (
+//     <ThemeContext.Provider value={{ theme, setTheme }}>
+//       {children}
+//     </ThemeContext.Provider>
+//   );
+// }
 
-export function useTheme() {
-  const context = useContext(ThemeContext);
-  if (context === undefined) {
-    throw new Error('useTheme must be used within a ThemeProvider');
-  }
-  return context;
-} 
+// export function useTheme() {
+//   const context = useContext(ThemeContext);
+//   if (context === undefined) {
+//     // Return a default theme instead of throwing
+//     return {
+//       theme: 'light' as Theme,
+//       setTheme: () => {},
+//     };
+//   }
+//   return context;
+// } 

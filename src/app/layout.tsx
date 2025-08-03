@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 // import { TRPCProvider } from '@/components/providers/trpc-provider';
-import { ClientThemeProvider } from '@/components/providers/client-theme-provider';
+// import { ClientThemeProvider } from '@/components/providers/client-theme-provider';
 import './globals.css';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -19,10 +19,10 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body className={inter.className}>
-        <ClientThemeProvider>
+        {/* <ClientThemeProvider> */}
           {/* <TRPCProvider>{children}</TRPCProvider> */}
           {children}
-        </ClientThemeProvider>
+        {/* </ClientThemeProvider> */}
       </body>
     </html>
   );

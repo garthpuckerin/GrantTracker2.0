@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { ThemePicker } from '@/components/ui/theme-picker';
+// import { ThemePicker } from '@/components/ui/theme-picker';
 
 export default function SignInPage() {
   const [email, setEmail] = useState('demo@university.edu');
@@ -20,9 +20,9 @@ export default function SignInPage() {
     <div className='flex min-h-screen items-center justify-center bg-gray-50'>
       <div className='w-full max-w-md'>
         <div className='mb-8 text-center'>
-          <div className='flex justify-end mb-4'>
+          {/* <div className='flex justify-end mb-4'>
             <ThemePicker />
-          </div>
+          </div> */}
           <h1 className='text-3xl font-bold text-gray-900'>
             Grant Tracker 2.0
           </h1>

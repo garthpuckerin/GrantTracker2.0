@@ -1,7 +1,7 @@
-'use client';
+// 'use client';
 
-import { ThemeProvider } from './theme-provider';
+// import { ThemeProvider } from './theme-provider';
 
-export function ClientThemeProvider({ children }: { children: React.ReactNode }) {
-  return <ThemeProvider>{children}</ThemeProvider>;
-} 
+// export function ClientThemeProvider({ children }: { children: React.ReactNode }) {
+//   return <ThemeProvider>{children}</ThemeProvider>;
+// } 
