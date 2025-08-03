@@ -5,9 +5,9 @@ const nextConfig = {
   poweredByHeader: false,
   compress: true,
 
-  experimental: {
-    appDir: true,
-  },
+  // experimental: {
+  //   appDir: true, // Deprecated in Next.js 14
+  // },
 
   // Image optimization
   images: {

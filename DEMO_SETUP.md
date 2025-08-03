@@ -44,6 +44,28 @@ npm run dev
 - **Demo Login**: demo@university.edu / demo123
 - **Click "Sign In"** to access the dashboard
 
+## 🎨 Theme System
+
+The application includes a **comprehensive theme system** with three beautiful themes:
+
+### Available Themes
+- **☀️ Light** - Clean white background with dark text
+- **☕ Warm Beige** - Cozy cream tones for comfortable reading
+- **🌙 Dark Grey** - Professional dark theme for modern aesthetics
+
+### How to Use Themes
+1. **Theme Picker Location**: Available in the header on both sign-in page and dashboard
+2. **Instant Switching**: Click the theme button to open the dropdown menu
+3. **Persistent Storage**: Your theme choice is automatically saved
+4. **Responsive Design**: Works perfectly on mobile and desktop
+
+### Theme Features
+- ✅ **CSS Custom Properties** for consistent theming
+- ✅ **Proper contrast ratios** for accessibility
+- ✅ **Smooth transitions** between themes
+- ✅ **Hydration-safe** implementation
+- ✅ **Local storage** for theme persistence
+
 ## 🔐 Demo Authentication
 
 This project uses **simulated authentication** for demo purposes:
@@ -112,6 +134,9 @@ GrantTracker2.0/
 ├── src/
 │   ├── app/                 # Next.js app router
 │   ├── components/          # React components
+│   │   ├── ui/             # UI components (buttons, cards, etc.)
+│   │   ├── providers/      # Context providers (theme, tRPC)
+│   │   └── auth/           # Authentication components
 │   ├── lib/                # Utilities and config
 │   └── server/             # tRPC API routes
 ├── prisma/                 # Database schema
@@ -126,6 +151,7 @@ GrantTracker2.0/
 - ✅ **Prisma ORM** with PostgreSQL
 - ✅ **tRPC** for type-safe APIs
 - ✅ **Tailwind CSS** for styling
+- ✅ **Theme System** with multiple color schemes
 - ✅ **Form validation** with React Hook Form
 - ✅ **Testing** with Jest and Playwright
 - ✅ **Accessibility** testing
@@ -149,6 +175,11 @@ npm run db:push
 npm run demo:reset
 ```
 
+### Adding New Themes
+1. Add theme colors to `src/lib/themes.ts`
+2. Update theme icons in `src/components/ui/theme-picker.tsx`
+3. Test contrast ratios for accessibility
+
 ## 📝 Portfolio Notes
 
 This demo showcases:
@@ -156,10 +187,18 @@ This demo showcases:
 - **Database design** and ORM usage
 - **Type safety** with TypeScript
 - **Modern React** patterns
+- **Theme system** implementation
 - **Testing** practices
 - **Deployment** readiness
 
 ## 🐛 Troubleshooting
+
+### Theme System Issues
+```bash
+# Clear browser cache and localStorage
+# Or restart the development server
+npm run dev
+```
 
 ### Database Connection Issues
 ```bash
@@ -185,10 +224,13 @@ npm run type-check
 npm run dev -- -p 3001
 ```
 
+### Next.js Configuration Warnings
+The project uses Next.js 14 with some experimental features. Warnings about deprecated options are normal and don't affect functionality.
+
 ## 📞 Support
 
 This is a demo project. For questions about the implementation, check the code comments or create an issue on GitHub.
 
 ---
 
-**Note**: This is a portfolio project demonstrating modern web development practices. The authentication is simulated for demo purposes. 
+**Note**: This is a portfolio project demonstrating modern web development practices. The authentication is simulated for demo purposes, and the theme system showcases advanced UI/UX skills. 
