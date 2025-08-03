@@ -1,0 +1,186 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  ADMIN
+  PI
+  FINANCE
+  VIEWER
+}
+
+enum GrantStatus {
+  DRAFT
+  ACTIVE
+  CLOSED
+  NOT_AWARDED
+}
+
+enum RenewalStatus {
+  PENDING
+  SUBMITTED
+  AWARDED
+  NOT_AWARDED
+}
+
+enum BudgetCategory {
+  PERSONNEL
+  TRAVEL
+  SUPPLIES
+  EQUIPMENT
+  INDIRECT
+}
+
+enum DocumentType {
+  NARRATIVE
+  BUDGET_JUSTIFICATION
+  RENEWAL
+  REPORT
+  OTHER
+}
+
+enum TaskStatus {
+  OPEN
+  IN_PROGRESS
+  COMPLETE
+}
+
+enum TaskPriority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+}
+
+model User {
+  id        String   @id @default(uuid())
+  clerkId   String   @unique
+  fullName  String
+  email     String   @unique
+  role      UserRole @default(VIEWER)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  createdGrants     Grant[]           @relation("GrantCreator")
+  principalGrants   Grant[]           @relation("PrincipalInvestigator")
+  budgetUpdates     BudgetLineItem[]  @relation("BudgetUpdater")
+  uploadedDocuments Document[]        @relation("DocumentUploader")
+  assignedTasks     Task[]            @relation("TaskAssignee")
+
+  @@map("users")
+}
+
+model Grant {
+  id                     String      @id @default(uuid())
+  grantTitle             String
+  grantNumberMaster      String      @unique
+  agencyName             String
+  startDate              DateTime
+  endDate                DateTime
+  currentYearNumber      Int         @default(1)
+  totalYears             Int
+  status                 GrantStatus @default(DRAFT)
+  principalInvestigatorId String
+  createdById            String
+  createdAt              DateTime    @default(now())
+  updatedAt              DateTime    @updatedAt
+
+  // Relations
+  principalInvestigator User         @relation("PrincipalInvestigator", fields: [principalInvestigatorId], references: [id])
+  createdBy             User         @relation("GrantCreator", fields: [createdById], references: [id])
+  grantYears            GrantYear[]
+  documents             Document[]
+
+  @@map("grants")
+}
+
+model GrantYear {
+  id                   String        @id @default(uuid())
+  grantId              String
+  yearNumber           Int
+  fiscalYear           String
+  grantNumber          String        @unique
+  previousGrantNumber  String?
+  awardAmount          Decimal       @db.Decimal(12, 2)
+  renewalStatus        RenewalStatus @default(PENDING)
+  submissionDueDate    DateTime?
+  notes                String?       @db.Text
+  createdAt            DateTime      @default(now())
+  updatedAt            DateTime      @updatedAt
+
+  // Relations
+  grant           Grant             @relation(fields: [grantId], references: [id], onDelete: Cascade)
+  budgetLineItems BudgetLineItem[]
+  documents       Document[]
+  tasks           Task[]
+
+  @@unique([grantId, yearNumber])
+  @@map("grant_years")
+}
+
+model BudgetLineItem {
+  id               String         @id @default(uuid())
+  grantYearId      String
+  category         BudgetCategory
+  description      String
+  budgetedAmount   Decimal        @db.Decimal(12, 2)
+  actualSpent      Decimal        @default(0) @db.Decimal(12, 2)
+  encumberedAmount Decimal        @default(0) @db.Decimal(12, 2)
+  lastUpdatedBy    String
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+
+  // Relations
+  grantYear         GrantYear @relation(fields: [grantYearId], references: [id], onDelete: Cascade)
+  lastUpdatedByUser User      @relation("BudgetUpdater", fields: [lastUpdatedBy], references: [id])
+
+  @@map("budget_line_items")
+}
+
+model Document {
+  id           String       @id @default(uuid())
+  fileName     String
+  fileUrl      String
+  fileType     String
+  fileSize     Int
+  grantId      String?
+  grantYearId  String?
+  uploadedById String
+  documentType DocumentType
+  uploadedAt   DateTime     @default(now())
+
+  // Relations
+  grant        Grant?     @relation(fields: [grantId], references: [id], onDelete: Cascade)
+  grantYear    GrantYear? @relation(fields: [grantYearId], references: [id], onDelete: Cascade)
+  uploadedBy   User       @relation("DocumentUploader", fields: [uploadedById], references: [id])
+
+  @@map("documents")
+}
+
+model Task {
+  id           String       @id @default(uuid())
+  grantYearId  String
+  title        String
+  description  String?      @db.Text
+  dueDate      DateTime
+  assignedToId String
+  status       TaskStatus   @default(OPEN)
+  priority     TaskPriority @default(MEDIUM)
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+
+  // Relations
+  grantYear  GrantYear @relation(fields: [grantYearId], references: [id], onDelete: Cascade)
+  assignedTo User      @relation("TaskAssignee", fields: [assignedToId], references: [id])
+
+  @@map("tasks")
+}
