@@ -7,24 +7,23 @@ const prisma = new PrismaClient();
 
 async function setupDemo() {
   console.log('🚀 Setting up GrantTracker2.0 Demo...');
-  
+
   try {
     // Generate Prisma client
     console.log('📦 Generating Prisma client...');
     execSync('npx prisma generate', { stdio: 'inherit' });
-    
+
     // Push database schema
     console.log('🗄️  Setting up database...');
     execSync('npx prisma db push', { stdio: 'inherit' });
-    
+
     // Seed with demo data
     console.log('🌱 Seeding demo data...');
     await seedDemoData();
-    
+
     console.log('✅ Demo setup complete!');
     console.log('📝 Demo credentials: demo@university.edu / demo123');
     console.log('🔄 Database will auto-reset every 24 hours');
-    
   } catch (error) {
     console.error('❌ Setup failed:', error);
     process.exit(1);
@@ -95,7 +94,7 @@ async function seedDemoData() {
       yearNumber: 1,
       fiscalYear: '2024',
       grantNumber: 'NSF-2024-001-Y1',
-      awardAmount: 500000.00,
+      awardAmount: 500000.0,
       renewalStatus: 'AWARDED',
       submissionDueDate: new Date('2024-12-15'),
       notes: 'First year of funding - research phase',
@@ -111,7 +110,7 @@ async function seedDemoData() {
       fiscalYear: '2025',
       grantNumber: 'NSF-2024-001-Y2',
       previousGrantNumber: 'NSF-2024-001-Y1',
-      awardAmount: 450000.00,
+      awardAmount: 450000.0,
       renewalStatus: 'PENDING',
       submissionDueDate: new Date('2025-01-15'),
       notes: 'Second year - implementation phase',
@@ -126,27 +125,27 @@ async function seedDemoData() {
         grantYearId: year1.id,
         category: 'PERSONNEL',
         description: 'Principal Investigator Salary',
-        budgetedAmount: 150000.00,
-        actualSpent: 75000.00,
-        encumberedAmount: 80000.00,
+        budgetedAmount: 150000.0,
+        actualSpent: 75000.0,
+        encumberedAmount: 80000.0,
         lastUpdatedBy: financeUser.id,
       },
       {
         grantYearId: year1.id,
         category: 'SUPPLIES',
         description: 'Research Materials and Equipment',
-        budgetedAmount: 100000.00,
-        actualSpent: 45000.00,
-        encumberedAmount: 50000.00,
+        budgetedAmount: 100000.0,
+        actualSpent: 45000.0,
+        encumberedAmount: 50000.0,
         lastUpdatedBy: financeUser.id,
       },
       {
         grantYearId: year1.id,
         category: 'TRAVEL',
         description: 'Conference Travel and Presentations',
-        budgetedAmount: 25000.00,
-        actualSpent: 12000.00,
-        encumberedAmount: 15000.00,
+        budgetedAmount: 25000.0,
+        actualSpent: 12000.0,
+        encumberedAmount: 15000.0,
         lastUpdatedBy: financeUser.id,
       },
     ],
@@ -192,7 +191,7 @@ async function seedDemoData() {
 // Auto-reset function for demo purposes
 async function resetDemo() {
   console.log('🔄 Resetting demo data...');
-  
+
   try {
     // Clear all data
     await prisma.task.deleteMany();
@@ -201,10 +200,10 @@ async function resetDemo() {
     await prisma.grantYear.deleteMany();
     await prisma.grant.deleteMany();
     await prisma.user.deleteMany();
-    
+
     // Re-seed
     await seedDemoData();
-    
+
     console.log('✅ Demo reset complete!');
   } catch (error) {
     console.error('❌ Reset failed:', error);
@@ -220,4 +219,4 @@ if (command === 'reset') {
   setupDemo();
 }
 
-module.exports = { setupDemo, resetDemo, seedDemoData }; 
+module.exports = { setupDemo, resetDemo, seedDemoData };

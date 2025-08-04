@@ -3,6 +3,7 @@
 ## 🎨 Theme System Overview
 
 The GrantTracker2.0 theme system uses:
+
 - **CSS Custom Properties** for dynamic theming
 - **React Context** for state management
 - **Local Storage** for persistence
@@ -13,6 +14,7 @@ The GrantTracker2.0 theme system uses:
 ### Issue: "useTheme must be used within a ThemeProvider"
 
 **Symptoms:**
+
 - Error in browser console
 - Theme picker not working
 - 500 errors on dashboard
@@ -20,12 +22,14 @@ The GrantTracker2.0 theme system uses:
 **Solutions:**
 
 1. **Clear Browser Cache**
+
    ```bash
    # Hard refresh the page (Ctrl+F5 or Cmd+Shift+R)
    # Or clear localStorage manually in DevTools
    ```
 
 2. **Restart Development Server**
+
    ```bash
    # Stop the server (Ctrl+C)
    npm run dev
@@ -45,36 +49,40 @@ The GrantTracker2.0 theme system uses:
 ### Issue: Theme Not Persisting
 
 **Symptoms:**
+
 - Theme resets on page refresh
 - Theme picker shows wrong current theme
 
 **Solutions:**
 
 1. **Check Local Storage**
+
    ```javascript
    // In browser console
-   localStorage.getItem('theme')
+   localStorage.getItem('theme');
    ```
 
 2. **Clear and Reset**
    ```javascript
    // In browser console
-   localStorage.clear()
+   localStorage.clear();
    // Then refresh page
    ```
 
 ### Issue: Theme Colors Not Applying
 
 **Symptoms:**
+
 - Theme picker works but colors don't change
 - Some components not themed
 
 **Solutions:**
 
 1. **Check CSS Variables**
+
    ```javascript
    // In browser console
-   getComputedStyle(document.documentElement).getPropertyValue('--background')
+   getComputedStyle(document.documentElement).getPropertyValue('--background');
    ```
 
 2. **Verify Tailwind Config**
@@ -90,6 +98,7 @@ The GrantTracker2.0 theme system uses:
 ### Adding New Themes
 
 1. **Define Theme Colors**
+
    ```typescript
    // In src/lib/themes.ts
    export const themes: Record<Theme, ThemeColors> = {
@@ -103,6 +112,7 @@ The GrantTracker2.0 theme system uses:
    ```
 
 2. **Add Theme Icon**
+
    ```typescript
    // In src/components/ui/theme-picker.tsx
    const themeIcons = {
@@ -118,12 +128,13 @@ The GrantTracker2.0 theme system uses:
 ### Debugging Theme Issues
 
 1. **Browser DevTools**
+
    ```javascript
    // Check current theme
-   localStorage.getItem('theme')
-   
+   localStorage.getItem('theme');
+
    // Check CSS variables
-   getComputedStyle(document.documentElement)
+   getComputedStyle(document.documentElement);
    ```
 
 2. **React DevTools**
@@ -140,17 +151,20 @@ The GrantTracker2.0 theme system uses:
 ## 🎯 Best Practices
 
 ### Theme Implementation
+
 - ✅ Use CSS custom properties for all colors
 - ✅ Test all themes with all components
 - ✅ Ensure proper contrast ratios
 - ✅ Handle hydration properly
 
 ### Performance
+
 - ✅ Minimize theme switching overhead
 - ✅ Use efficient CSS variable updates
 - ✅ Avoid unnecessary re-renders
 
 ### Accessibility
+
 - ✅ Maintain WCAG AA contrast ratios
 - ✅ Test with keyboard navigation
 - ✅ Ensure screen reader compatibility
@@ -164,4 +178,4 @@ If you're still experiencing issues:
 3. **Test in incognito mode** to rule out cache issues
 4. **Create a minimal reproduction** if possible
 
-The theme system is designed to be robust and user-friendly. Most issues can be resolved with a simple restart or cache clear. 
+The theme system is designed to be robust and user-friendly. Most issues can be resolved with a simple restart or cache clear.

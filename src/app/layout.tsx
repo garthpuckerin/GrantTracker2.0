@@ -20,8 +20,8 @@ export default function RootLayout({
     <html lang='en'>
       <body className={inter.className}>
         {/* <ClientThemeProvider> */}
-          {/* <TRPCProvider>{children}</TRPCProvider> */}
-          {children}
+        {/* <TRPCProvider>{children}</TRPCProvider> */}
+        {children}
         {/* </ClientThemeProvider> */}
       </body>
     </html>

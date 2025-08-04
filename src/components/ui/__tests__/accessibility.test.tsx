@@ -12,7 +12,7 @@ describe('Accessibility Tests', () => {
   describe('Button Component', () => {
     it('should not have accessibility violations', async () => {
       const { container } = render(
-        <Button aria-label="Test button">Click me</Button>
+        <Button aria-label='Test button'>Click me</Button>
       );
       const results = await axe(container);
       expect(results).toHaveNoViolations();
@@ -20,11 +20,11 @@ describe('Accessibility Tests', () => {
 
     it('should have proper ARIA attributes', () => {
       render(
-        <Button aria-label="Submit form" aria-describedby="button-help">
+        <Button aria-label='Submit form' aria-describedby='button-help'>
           Submit
         </Button>
       );
-      
+
       const button = screen.getByRole('button', { name: 'Submit form' });
       expect(button).toHaveAttribute('aria-label', 'Submit form');
       expect(button).toHaveAttribute('aria-describedby', 'button-help');
@@ -34,7 +34,7 @@ describe('Accessibility Tests', () => {
   describe('Badge Component', () => {
     it('should not have accessibility violations', async () => {
       const { container } = render(
-        <Badge variant="default" aria-label="Status badge">
+        <Badge variant='default' aria-label='Status badge'>
           Active
         </Badge>
       );
@@ -44,11 +44,11 @@ describe('Accessibility Tests', () => {
 
     it('should have proper color contrast', () => {
       render(
-        <Badge variant="default" className="bg-green-100 text-green-800">
+        <Badge variant='default' className='bg-green-100 text-green-800'>
           Active
         </Badge>
       );
-      
+
       const badge = screen.getByText('Active');
       expect(badge).toBeInTheDocument();
       // Note: Color contrast would need manual verification or specialized tools
@@ -82,7 +82,7 @@ describe('Accessibility Tests', () => {
           </CardContent>
         </Card>
       );
-      
+
       const heading = screen.getByRole('heading', { name: 'Test Card' });
       expect(heading).toBeInTheDocument();
     });
@@ -92,9 +92,9 @@ describe('Accessibility Tests', () => {
     it('should not have accessibility violations', async () => {
       const { container } = render(
         <Input
-          aria-label="Email input"
-          placeholder="Enter your email"
-          type="email"
+          aria-label='Email input'
+          placeholder='Enter your email'
+          type='email'
         />
       );
       const results = await axe(container);
@@ -104,17 +104,17 @@ describe('Accessibility Tests', () => {
     it('should have proper form association', () => {
       render(
         <div>
-          <label htmlFor="email-input">Email Address</label>
+          <label htmlFor='email-input'>Email Address</label>
           <Input
-            id="email-input"
-            aria-describedby="email-help"
-            placeholder="Enter your email"
-            type="email"
+            id='email-input'
+            aria-describedby='email-help'
+            placeholder='Enter your email'
+            type='email'
           />
-          <div id="email-help">Please enter a valid email address</div>
+          <div id='email-help'>Please enter a valid email address</div>
         </div>
       );
-      
+
       const input = screen.getByRole('textbox', { name: 'Email Address' });
       expect(input).toHaveAttribute('id', 'email-input');
       expect(input).toHaveAttribute('aria-describedby', 'email-help');
@@ -130,10 +130,10 @@ describe('Accessibility Tests', () => {
           <Button>Third Button</Button>
         </div>
       );
-      
+
       const buttons = screen.getAllByRole('button');
       expect(buttons).toHaveLength(3);
-      
+
       // Test that all buttons are focusable (buttons are naturally focusable)
       buttons.forEach(button => {
         expect(button).toBeInTheDocument();
@@ -146,25 +146,29 @@ describe('Accessibility Tests', () => {
     it('should have proper ARIA landmarks', () => {
       render(
         <div>
-          <header role="banner">
+          <header role='banner'>
             <h1>Application Header</h1>
           </header>
-          <nav role="navigation" aria-label="Main navigation">
+          <nav role='navigation' aria-label='Main navigation'>
             <ul>
-              <li><a href="/dashboard">Dashboard</a></li>
-              <li><a href="/tasks">Tasks</a></li>
+              <li>
+                <a href='/dashboard'>Dashboard</a>
+              </li>
+              <li>
+                <a href='/tasks'>Tasks</a>
+              </li>
             </ul>
           </nav>
-          <main role="main">
+          <main role='main'>
             <h2>Main Content</h2>
             <p>Content here</p>
           </main>
         </div>
       );
-      
+
       expect(screen.getByRole('banner')).toBeInTheDocument();
       expect(screen.getByRole('navigation')).toBeInTheDocument();
       expect(screen.getByRole('main')).toBeInTheDocument();
     });
   });
-}); 
+});

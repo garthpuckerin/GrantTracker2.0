@@ -125,15 +125,15 @@ export function getThemeCSSVariables(theme: Theme): string {
 
 export function applyTheme(theme: Theme) {
   if (typeof window === 'undefined') return;
-  
+
   const root = document.documentElement;
   const colors = themes[theme];
-  
+
   // Apply all color variables with hsl() wrapper
   Object.entries(colors).forEach(([key, value]) => {
     root.style.setProperty(`--${key}`, `hsl(${value})`);
   });
-  
+
   // Store theme preference
   localStorage.setItem('theme', theme);
 }
@@ -145,5 +145,7 @@ export function getStoredTheme(): Theme {
 
 export function getSystemTheme(): Theme {
   if (typeof window === 'undefined') return 'light';
-  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-} 
+  return window.matchMedia('(prefers-color-scheme: dark)').matches
+    ? 'dark'
+    : 'light';
+}
